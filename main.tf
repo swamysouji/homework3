@@ -1,4 +1,5 @@
 terraform {
+    required_version = ">= 1.7.2"
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
@@ -12,9 +13,10 @@ provider "docker" {}
 # Build the Docker image from the local Dockerfile
 resource "docker_image" "dummy_serv" {
   name = "dummy_serv"
+  keep_locally = false
   build {
-    context    = "."
-    dockerfile = "Dockerfile"
+    context    = path.module
+    dockerfile = "${path.module}/Dockerfile"
   }
 }
 
